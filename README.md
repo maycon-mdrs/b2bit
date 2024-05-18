@@ -72,17 +72,15 @@ $ npm run build
 
 - `src/pages`: Specific page components will be placed here. Each page may have its own directory with components, styles, etc.
 
-- `src/pages/layouts`: Folder designated for page layouts.
-
 - `src/services`: Shared services will be placed here. Services are used for business logic, communication with APIs, etc.
 
 - `src/lib`: This directory may contain shared resources.
 
 - `src/hooks`: Files related to React hooks will be maintained here.
 
-- `src/types`: Specific types for this application will be kept here.
+- `src/interfaces`: Specific interfaces for this application will be kept here.
 
-- `src/providers`: This folder will contain all custom context providers for global contexts.
+- `src/context`: This folder will contain all the context files for managing global state in the application (login).
 
 ## 📦 Tools 
 
