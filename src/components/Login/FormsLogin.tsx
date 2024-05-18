@@ -31,7 +31,7 @@ const formSchema = z.object({
 })
 
 export function FormsLogin() {
-    const { mutate, isSuccess, isPending, isError, error } = useLoginMutate();
+    const { mutate, isSuccess, isPending, isError } = useLoginMutate();
     const navigate = useNavigate();
 
     const form = useForm({
