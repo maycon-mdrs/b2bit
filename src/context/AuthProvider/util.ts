@@ -1,4 +1,3 @@
-import { Api } from "@/services/Api";
 import { IUser } from "@/interfaces/IUser";
 
 /**
