@@ -19,9 +19,11 @@ export const initializeAxios = (onUnauthorized: { (): void; (): void; }) => {
         response => response,
         error => {
             if (error.response && error.response.status === 401) {
-                onUnauthorized(); // Calls the callback function to redirect
-                deleteUserLocalStorage();
-                message.error("Session expired! Login again.");
+                if (error.response.config.url !== '/login') {
+                    onUnauthorized(); // Calls the callback function to redirect
+                    deleteUserLocalStorage();
+                    message.error("Session expired! Login again.");
+                }
             }
             console.log(error);
         }
