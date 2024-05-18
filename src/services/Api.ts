@@ -15,11 +15,12 @@ export const Api = axios.create({
  * @param {Function} onUnauthorized - Callback function to be called when a 401 response is received.
  */
 export const initializeAxios = (onUnauthorized: { (): void; (): void; }) => {
+    const currentUrl = window.location.pathname;
     Api.interceptors.response.use(
         response => response,
         error => {
             if (error.response && error.response.status === 401) {
-                if (error.response.config.url !== '/login') {
+                if (currentUrl !== '/login') {
                     onUnauthorized(); // Calls the callback function to redirect
                     deleteUserLocalStorage();
                     message.error("Session expired! Login again.");
