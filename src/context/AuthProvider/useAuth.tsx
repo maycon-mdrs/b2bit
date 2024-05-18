@@ -2,10 +2,10 @@ import { useContext } from "react";
 import { AuthContext } from "@/context/AuthProvider";
 
 /**
- * Um hook que permite o acesso ao contexto de autenticação.
- * @returns O contexto de autenticação obtido do AuthContext. Isso permite que os componentes que usam esse hook tenham acesso ao estado de autenticação e às funcionalidades relacionadas.
+ * A hook that allows access to the authentication context.
+ * @returns The authentication context obtained from AuthContext. This allows components using this hook to access the authentication state and related functionalities.
  */
-export function useAuth () {
+export function useAuth() {
     const context = useContext(AuthContext);
     return context;
 }
