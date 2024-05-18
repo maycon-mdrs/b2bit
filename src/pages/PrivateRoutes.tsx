@@ -2,13 +2,13 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/AuthProvider/useAuth";
 
 /**
- * Componente que define rotas privadas baseadas na autenticação do usuário.
- * Se o usuário estiver autenticado (possuir um email), permite o acesso às rotas aninhadas (Outlet),
- * caso contrário, redireciona para a página de login.
+ * Component that defines private routes based on user authentication.
+ * If the user is authenticated (has a token), it allows access to the nested routes (Outlet),
+ * otherwise, it redirects to the login page.
  */
-export function PrivateRoutes () {
+export function PrivateRoutes() {
     const auth = useAuth();
-    console.log('auth.email: ', auth.email);
-    
-    return auth.email ? <Outlet/> : <Navigate to='/login'/>;
+    console.log('auth.token: ', auth.token);
+
+    return auth.token ? <Outlet /> : <Navigate to='/login' />;
 }

@@ -1,13 +1,15 @@
-import { Nav } from '@/components/Home/Nav'
-import { CardHome } from '@/components/Home/CardHome'
+import { Nav } from '@/components/Nav/Nav';
+import { CardHome } from '@/components/Home/CardHome';
+import setBodyColor from '@/setBodyColor';
 
 export function HomePage() {
+    setBodyColor({color: "#F1F5F9"})
     return (
-        <div className='flex flex-col h-scren'>
+        <>
             <Nav />
-            <div className=''>
+            <div className='flex flex-col mt-16 p-5 justify-center items-center'>
                 <CardHome />
             </div>
-        </div>
+        </>
     )
 }

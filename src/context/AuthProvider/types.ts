@@ -1,26 +1,26 @@
 import { IUser } from '@/interfaces/IUser';
 
 /**
- * Interface que estende a interface IUser e adiciona métodos e propriedades relacionados ao contexto de autenticação.
+ * Interface that extends the IUser interface and adds methods and properties related to the authentication context.
  */
 export interface IContext extends IUser {
     /**
-     * Função assíncrona que realiza a autenticação do usuário com base no email e senha fornecidos.
-     * @param email O email do usuário.
-     * @param password A senha do usuário.
-     * @returns Uma Promise que é resolvida quando a autenticação é bem-sucedida e rejeitada quando não é.
+     * Asynchronous function that authenticates the user based on the provided email and password.
+     * @param email The user's email.
+     * @param password The user's password.
+     * @returns A Promise that resolves when the authentication is successful and rejects when it is not.
      */
     authenticate: (email: string, password: string) => Promise<void>;
 
     /**
-     * Função que efetua o logout do usuário, encerrando sua sessão.
+     * Function that logs out the user, ending their session.
      */
     logout: () => void;
 }
 
 export interface IAuthProvider {
     /**
-     * Os elementos JSX (React) que serão envolvidos pelo provedor de autenticação.
+     * The JSX elements (React) that will be wrapped by the authentication provider.
      */
     children: JSX.Element;
 }

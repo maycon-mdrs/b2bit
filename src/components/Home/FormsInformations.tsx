@@ -1,40 +1,19 @@
-import { Input } from "@/components/ui/input"
-import { Form, FormField, FormLabel, FormItem, FormControl } from "@/components/ui/form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
+import { Form, FormField, FormLabel, FormItem, FormControl } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
+import { IProfile } from "@/interfaces/IProfile";
 
-const formSchema = z.object({
-    email: z.string({
-        required_error: "Please enter a email."
-    }).min(1, {
-        message: "Name must be at least 2 characters.",
-    }).max(100, {
-        message: "Name must be at most 100 characters.",
-    }),
-    password: z.string({
-        required_error: "Please enter a password."
-    }).min(1, {
-        message: "Name must be at least 2 characters.",
-    }).max(100, {
-        message: "Name must be at most 100 characters.",
-    }),
-})
-
-export function FormsInformations() {
+export function FormsInformations(props: IProfile) {
     const form = useForm({
-        resolver: zodResolver(formSchema),
-    })
-
-    const onSubmit = async (values: any) => {
-
-    }
+        defaultValues: {
+            name: "",
+            email: "",
+        }
+    });
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-6"
-            >
+            <form className="flex flex-col gap-6">
                 <FormField
                     control={form.control}
                     name="name"
@@ -45,7 +24,7 @@ export function FormsInformations() {
                                 <span className="font-bold"> Name</span>
                             </FormLabel>
                             <FormControl>
-                                <Input disabled />
+                                <Input defaultValue={props?.name} disabled />
                             </FormControl>
                         </FormItem>
                     )}
@@ -60,7 +39,7 @@ export function FormsInformations() {
                                 <span className="font-bold"> E-mail</span>
                             </FormLabel>
                             <FormControl>
-                                <Input disabled />
+                                <Input defaultValue={props?.email} disabled />
                             </FormControl>
                         </FormItem>
                     )}

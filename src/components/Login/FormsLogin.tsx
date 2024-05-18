@@ -1,47 +1,74 @@
-import { Input } from "@/components/ui/input"
-import { Form, FormField, FormLabel, FormItem, FormControl } from "@/components/ui/form"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
+import { Form, FormField, FormLabel, FormItem, FormControl, FormMessage } from "@/components/ui/form";
+import { Alert, message } from 'antd';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { LoadingSpinner } from "@/components/ui/LoadingSpinner";
 
-import { login } from "@/services/LoginService"
-import { IUser } from "@/interfaces/IUser"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useLoginMutate } from "@/hooks/useLogin";
+
+import { ILogin } from "@/interfaces/IUser";
+
 
 const formSchema = z.object({
     email: z.string({
-        required_error: "Please enter a email."
-    }).min(1, {
-        message: "Name must be at least 2 characters.",
-    }).max(100, {
-        message: "Name must be at most 100 characters.",
+        required_error: "Please enter an email.",
+    }).email({
+        message: "Please enter a valid email address.",
     }),
     password: z.string({
-        required_error: "Please enter a password."
+        required_error: "Please enter a password.",
     }).min(1, {
-        message: "Name must be at least 2 characters.",
+        message: "Password must be at least 1 character.",
     }).max(100, {
-        message: "Name must be at most 100 characters.",
+        message: "Password must be at most 100 characters.",
     }),
 })
 
 export function FormsLogin() {
+    const { mutate, isSuccess, isPending, isError, error } = useLoginMutate();
+    const navigate = useNavigate();
+
     const form = useForm({
         resolver: zodResolver(formSchema),
-    })
-
-    const onSubmit = async (values: any) => {
-        try { 
-            console.log("cliquei")
-            const response = await login(values.email, values.password)
-            console.log(response)
-        } catch (error) {
-            console.log(error)
+        defaultValues: {
+            email: "",
+            password: ""
         }
+    });
+
+    const onSubmit = async (values: ILogin) => {
+        const loginData: ILogin = {
+            email: values.email,
+            password: values.password,
+        }
+        mutate(loginData);
     }
+
+    useEffect(() => {
+        if (isSuccess) { 
+            navigate('/home');
+            message.success('Successful login!');
+        }
+    }, [isSuccess]);
 
     return (
         <Form {...form}>
+            {
+                isError &&
+                <Alert
+                    message="Incorrect email or password!"
+                    showIcon
+                    className="mb-2"
+                    type="error"
+                    closable
+                />
+            }
             <form onSubmit={form.handleSubmit(onSubmit)}
                 className="flex flex-col gap-6"
             >
@@ -49,11 +76,12 @@ export function FormsLogin() {
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                        <FormItem className="flex flex-col gap-[9px] items-start">
+                        <FormItem className="flex flex-col items-start">
                             <FormLabel className="text-[18px]">E-mail</FormLabel>
                             <FormControl>
-                                <Input { ...field } placeholder="@gmail.com" />
+                                <Input {...field} placeholder="@gmail.com" />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
@@ -64,16 +92,17 @@ export function FormsLogin() {
                         <FormItem className="flex flex-col items-start">
                             <FormLabel className="text-[18px]">Password</FormLabel>
                             <FormControl>
-                                <Input { ...field } placeholder="***********" type="password" />
+                                <Input {...field} placeholder="***********" type="password" />
                             </FormControl>
+                            <FormMessage />
                         </FormItem>
                     )}
                 />
+
                 <Button type="submit" variant="b2bit" className="h-[54px]" >
-                    Sign In
+                    {isPending ? <LoadingSpinner /> : "Sign In"}
                 </Button>
             </form>
         </Form>
     )
 }
-

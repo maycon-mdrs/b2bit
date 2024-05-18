@@ -1,14 +1,15 @@
 import { createContext, useState } from "react";
 import { IUser } from "@/interfaces/IUser";
 import { IAuthProvider, IContext } from "@/context/AuthProvider/types";
-import { LoginRequest, setUserLocalStorage, getUserLocalStorage } from "@/context/AuthProvider/util";
+import { setUserLocalStorage, getUserLocalStorage } from "@/context/AuthProvider/util";
+import { LoginRequest } from "@/services/LoginService";
 
-// Criação de um contexto de autenticação com valores iniciais vazios.
+// Creation of an authentication context with empty initial values.
 export const AuthContext = createContext<IContext>({} as IContext);
 
 /**
- * Componente que provê o contexto de autenticação para a aplicação.
- * @param children Os elementos JSX que serão envolvidos pelo provedor de autenticação.
+ * Component that provides the authentication context for the application.
+ * @param children The JSX elements to be wrapped by the authentication provider.
  */
 export function AuthProvider ({ children }: IAuthProvider) {
     const [user, setUser] = useState<IUser>(()=>{
@@ -17,21 +18,21 @@ export function AuthProvider ({ children }: IAuthProvider) {
     });
 
     /**
-     * Função assíncrona que realiza a autenticação do usuário.
-     * @param email O email do usuário.
-     * @param password A senha do usuário.
+     * Asynchronous function that performs user authentication.
+     * @param email The user's email.
+     * @param password The user's password.
      */
     async function authenticate (email: string, password: string) {
-        const response = await LoginRequest(email, password);
+        const response = await LoginRequest({email, password});
 
-        const payload = { token: response.token, email };
+        const payload = { token: response.tokens.access, email };
 
         setUser(payload);
         setUserLocalStorage(payload);
     }
 
     /**
-     * Função que efetua o logout do usuário.
+     * Function that logs out the user.
      */
     function logout() {
         setUser({} as IUser);
