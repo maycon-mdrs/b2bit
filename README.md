@@ -13,6 +13,9 @@ Welcome to the b2bit project! 🚀 This challenge was designed to assess the tec
 
 The project description can be seem in the following [chaleng link](https://doc.clickup.com/3020915/p/h/2w63k-48543/4fbf8b7f844323d).
 
+## ✔️ Deploy is running
+The project can be accessed at: [b2bit-project](https://b2bit-project.netlify.app/)
+
 <br />
 
 ## ⚙️ Project Setup
@@ -30,6 +33,13 @@ After checking or installing node and npm on your machine it is necessary to clo
 ```bash
 $ git clone https://github.com/maycon-mdrs/b2bit.git
 ```
+
+After all, ensure to create an .env file following the structure outlined in .env.example. This file should contain all necessary environment variables for the application to function properly.
+
+
+| Variable      | Description                                        |
+|---------------|----------------------------------------------------|
+| VITE_API_URL  | The URL of the API endpoint that the frontend consumes. For local development, it is set to `https://api.homologation.cliqdrive.com.br/auth/`. Ensure it points to the correct API server address. |
 
 <br />
 
