@@ -79,7 +79,7 @@ export function FormsLogin() {
                         <FormItem className="flex flex-col items-start">
                             <FormLabel className="text-[18px]">E-mail</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="@gmail.com" />
+                                <Input {...field} placeholder="@gmail.com" autoComplete="true" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
@@ -92,7 +92,7 @@ export function FormsLogin() {
                         <FormItem className="flex flex-col items-start">
                             <FormLabel className="text-[18px]">Password</FormLabel>
                             <FormControl>
-                                <Input {...field} placeholder="***********" type="password" />
+                                <Input {...field} placeholder="***********" type="password" autoComplete="true" />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
